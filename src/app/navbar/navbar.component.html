@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/" (click)="reloadNavBar()">কেনাকাটা</a>
+    <button class="navbar-toggler" type="button" (click)="reloadNavBar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" (click)="isCollapsed = true" routerLink="/shopping-cart">
+            <i class="fa fa-shopping-cart"></i>
+            <span class="badge badge-warning badge-pill" *ngIf="cart$ | async as cart">
+              {{ cart.totalItemsCount }}
+            </span>
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <ng-template #anonymousUser>
+          <li class="nav-item">
+            <a class="nav-link" (click)="isCollapsed = true" routerLink="/login">Login</a>
+          </li>
+        </ng-template>
+        <li *ngIf="appUser; else anonymousUser" ngbDropdown class="nav-item">
+          <a ngbDropdownToggle class="nav-link">
+            {{ appUser.name }}
+          </a>
+          <div ngbDropdownMenu>
+            <a ngbDropdownItem (click)="isCollapsed = true" routerLink="/my/orders">My Orders</a>
+            <ng-container *ngIf="appUser.isAdmin">
+              <a ngbDropdownItem (click)="isCollapsed = true" routerLink="/admin/orders">Manage Orders</a>
+              <a ngbDropdownItem (click)="isCollapsed = true" routerLink="/admin/products">Manage Products</a>
+            </ng-container>
+            <a ngbDropdownItem (click)="logout()">Log Out</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

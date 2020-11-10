@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-10">
+        <div class="card  my-4">
+            <div class="card-header">ODER DESCRIPTION</div>
+            <div class="card-body">
+              <h5 class="card-title">Customer Info</h5>
+              <p class="card-text">Name: {{ order.shipping.name }} | Address: {{ order.shipping.addressLine1 }} {{ order.shipping.addressLine2 }} 
+                  | City: {{ order.shipping.city }}
+              </p>
+              <h5 class="card-title">Order Date</h5>
+              <p class="card-text"> {{ order.datePlaced | date:'full' }} </p>
+              <h5 class="card-title">Ordered Items</h5>
+              <p class="card-text">You have ordered {{ order.items.length }} items</p>
+              <ul class="list-group list-group-flush">
+                  <li *ngFor="let item of order.items" class="list-group-item">
+                      {{ item.quantity }} x {{ item.product.title }}
+                      <div class="float-right">
+                        {{ item.totalPrice | currency:'INR':'symbol' }}
+                      </div>
+                  </li>
+                </ul>
+            </div>
+            <div class="card-footer">
+                <a class="card-link" [routerLink]="previous">Back to Order List</a>
+            </div>
+          </div>
+    </div>
+</div>
